@@ -1,5 +1,6 @@
 ﻿using API_CF_Demo1.Models;
 using API_CF_Demo1.Repositories;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,20 +15,35 @@ namespace API_CF_Demo1.Controllers
         {
             _service=service;
         }
-
+        // [Route("AllDepartments")]
+        //[Route("GetAll")]
+        [EnableCors("MyPolicy")]
         [HttpGet]
         public IActionResult GetAll()
         {
             List<Department> departments = _service.GetAllDepartments();
             return Ok(departments);
         }
+        //[Route("DepartmentById")]
+         [HttpGet("{id:int}")]
+        //[HttpGet("{id:int:range(101,200")]
+        // [HttpGet("date/{date:dateTime}")]
+       // [HttpGet("{id:int:min(1)}")]
 
-        [HttpGet("{id}")]
         public IActionResult GetDepartmentById(int id)
         {
             Department department = _service.GetDepartmentById(id);
             return Ok(department);
         }
+        //[HttpGet]
+       //[HttpGet("{name}")]
+        [HttpGet("name/{name:length(3,12)}")]
+        public IActionResult GetDepartmentByName(string name)
+        {
+           var department = _service.SearchByName(name);
+            return Ok(department);
+        }
+
 
         [HttpPost]
         public IActionResult Post(Department department)

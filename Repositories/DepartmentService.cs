@@ -20,6 +20,11 @@ namespace API_CF_Demo1.Repositories
                 return null;
         }
 
+        public List<Department> SearchByName(string name)
+        {
+            var departments=_context.Departments.Where(x => x.Name.Contains(name)).ToList();
+            return departments;
+        }
         public int AddNewDepartment(Department department)
         {
             try
