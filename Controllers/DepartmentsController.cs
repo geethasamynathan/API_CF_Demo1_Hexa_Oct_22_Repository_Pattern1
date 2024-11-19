@@ -17,7 +17,7 @@ namespace API_CF_Demo1.Controllers
         }
         // [Route("AllDepartments")]
         //[Route("GetAll")]
-        [EnableCors("MyPolicy")]
+        [EnableCors("AllowSpecificOrigin")]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -28,8 +28,8 @@ namespace API_CF_Demo1.Controllers
          [HttpGet("{id:int}")]
         //[HttpGet("{id:int:range(101,200")]
         // [HttpGet("date/{date:dateTime}")]
-       // [HttpGet("{id:int:min(1)}")]
-
+        // [HttpGet("{id:int:min(1)}")]
+        [EnableCors("AllowSpecificOrigin")]
         public IActionResult GetDepartmentById(int id)
         {
             Department department = _service.GetDepartmentById(id);
@@ -43,7 +43,13 @@ namespace API_CF_Demo1.Controllers
            var department = _service.SearchByName(name);
             return Ok(department);
         }
-
+        [HttpGet("search")]
+        public IActionResult GetDepartmentBySearch(string search)
+        {
+            throw new Exception();
+            var department = _service.SearchByName(search);
+            return Ok(department);
+        }
 
         [HttpPost]
         public IActionResult Post(Department department)

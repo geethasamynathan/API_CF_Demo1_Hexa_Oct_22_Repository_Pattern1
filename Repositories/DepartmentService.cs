@@ -53,7 +53,7 @@ namespace API_CF_Demo1.Repositories
                 {
                     _context.Departments.Remove(department);
                     _context.SaveChanges();
-                    return "the given Department id " + id + "Removed";
+                    return "the given Department id " + id + " Removed";
                 }
                 else
                     return "Something went wrong with deletion";
@@ -82,7 +82,7 @@ namespace API_CF_Demo1.Repositories
             {
                 existingDepartment.Name=department.Name;
                 existingDepartment.DepartmentHead=department.DepartmentHead;
-                _context.Entry(existingDepartment).State=Microsoft.EntityFrameworkCore.EntityState.Modified;
+             //   _context.Entry(existingDepartment).State=Microsoft.EntityFrameworkCore.EntityState.Modified;
                 _context.SaveChanges();
                 return "Record Updated successfully";
             }

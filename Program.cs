@@ -1,4 +1,5 @@
 using API_CF_Demo1.Data;
+using API_CF_Demo1.Middleware;
 using API_CF_Demo1.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +22,11 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowAnyMethod();
         });
+
+    options.AddPolicy("AllowSpecificOrigin", 
+        policy => { policy.WithOrigins("http://127.0.0.1:5500")
+        .AllowAnyHeader()
+        .AllowAnyMethod(); });
 });
 var app = builder.Build();
 
@@ -31,7 +37,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCustomMiddleware();
+
 app.UseHttpsRedirection();
+app.UseExceptionHandlingMiddleware();
 app.UseCors();
 app.UseAuthorization();
 
